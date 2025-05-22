@@ -50,12 +50,27 @@ const Index = () => {
     setHistory([]);
     setHistoryIndex(-1);
     setCurrentQuestion(null);
+    
+    // Get a new random question immediately
+    const question = getRandomQuestion(resetQuestions);
+    if (question) {
+      const updatedQuestions = markAsSeen(resetQuestions, question.id);
+      setQuestions(updatedQuestions);
+      setHistory([question]);
+      setHistoryIndex(0);
+      setCurrentQuestion(question);
+    }
+    
     toast.success("Deck has been reset");
   };
 
   // Import a new deck
   const importNewDeck = () => {
     setShowUploader(true);
+    setQuestions([]);
+    setHistory([]);
+    setHistoryIndex(-1);
+    setCurrentQuestion(null);
   };
 
   // Go to next question
@@ -132,6 +147,9 @@ const Index = () => {
     return '';
   };
 
+  // Check if we have history to go back to
+  const hasHistory = history.length > 1 && historyIndex > 0;
+
   return (
     <ThemeProvider>
       <div className="min-h-screen flex flex-col">
@@ -161,8 +179,9 @@ const Index = () => {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="h-16 w-16 rounded-full" 
+                  className="h-16 w-16 rounded-full"
                   onClick={previousQuestion}
+                  disabled={!hasHistory}
                 >
                   <ArrowLeft className="h-6 w-6" />
                   <span className="sr-only">Previous question</span>
