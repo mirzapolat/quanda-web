@@ -3,21 +3,26 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { parseCSV } from "@/utils/questionDeck";
 import { toast } from "sonner";
-import { Upload, Cards } from "lucide-react";
+import { Upload, FileStack } from "lucide-react";
+
 interface FileUploaderProps {
   onDeckLoaded: (questions: any[]) => void;
 }
+
 export function FileUploader({
   onDeckLoaded
 }: FileUploaderProps) {
   const [isDragging, setIsDragging] = useState(false);
+
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(true);
   };
+
   const handleDragLeave = () => {
     setIsDragging(false);
   };
+
   const handleFileDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
@@ -26,17 +31,20 @@ export function FileUploader({
       processFile(files[0]);
     }
   };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length) {
       processFile(files[0]);
     }
   };
+
   const processFile = (file: File) => {
     if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
       toast.error('Please upload a CSV file');
       return;
     }
+    
     const reader = new FileReader();
     reader.onload = e => {
       try {
@@ -53,9 +61,11 @@ export function FileUploader({
         toast.error('Failed to parse the CSV file');
       }
     };
+    
     reader.onerror = () => {
       toast.error('Failed to read the file');
     };
+    
     reader.readAsText(file);
   };
 
@@ -68,11 +78,12 @@ export function FileUploader({
       fileInputRef[0].click();
     }
   };
+
   return <div className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors
         ${isDragging ? 'border-primary bg-primary/5' : 'border-border'}
       `} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleFileDrop}>
       <div className="flex flex-col items-center justify-center space-y-4">
-        <Cards className="w-12 h-12 text-primary" />
+        <FileStack className="w-12 h-12 text-primary" />
         <h3 className="text-lg font-medium">Drag & Drop a CSV file</h3>
         <p className="text-sm text-muted-foreground mb-4">
           Or click the button below to browse your files
