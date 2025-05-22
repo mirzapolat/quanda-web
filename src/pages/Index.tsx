@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { QuestionCard } from "@/components/QuestionCard";
@@ -22,6 +21,40 @@ const Index = () => {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [showUploader, setShowUploader] = useState<boolean>(true);
   const [direction, setDirection] = useState<'left' | 'right' | null>(null);
+  const [isStandalone, setIsStandalone] = useState<boolean>(false);
+
+  // Check if the app is running in standalone mode (installed PWA)
+  useEffect(() => {
+    // Check if the app is running as a standalone PWA
+    const isInStandaloneMode = () => {
+      return window.matchMedia('(display-mode: standalone)').matches || 
+             (window.navigator as any).standalone === true;
+    };
+    
+    setIsStandalone(isInStandaloneMode());
+    
+    // Listen for changes (e.g., if the user installs the app while using it)
+    const mediaQuery = window.matchMedia('(display-mode: standalone)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      setIsStandalone(e.matches);
+    };
+    
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleChange);
+    } else {
+      // Fallback for older browsers
+      mediaQuery.addListener(handleChange);
+    }
+    
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleChange);
+      } else {
+        // Fallback for older browsers
+        mediaQuery.removeListener(handleChange);
+      }
+    };
+  }, []);
 
   // Effect to handle initial card loading
   useEffect(() => {
@@ -32,6 +65,7 @@ const Index = () => {
 
   // Handle loading a deck
   const handleDeckLoaded = (loadedQuestions: Question[]) => {
+    // ... keep existing code (deck loading logic)
     setShowUploader(false);
     
     // Clear history and reset state before setting new questions
@@ -56,6 +90,7 @@ const Index = () => {
 
   // Reset the deck - mark all questions as unseen
   const resetDeck = () => {
+    // ... keep existing code (reset deck logic)
     if (questions.length === 0) {
       toast.error("No deck is currently loaded");
       return;
@@ -84,6 +119,7 @@ const Index = () => {
 
   // Import a new deck
   const importNewDeck = () => {
+    // ... keep existing code (import new deck logic)
     setShowUploader(true);
     setQuestions([]);
     setHistory([]);
@@ -94,6 +130,7 @@ const Index = () => {
 
   // Go to next question
   const nextQuestion = () => {
+    // ... keep existing code (next question logic)
     if (questions.length === 0) return;
     
     // If we've gone back in history and now going forward again,
@@ -146,6 +183,7 @@ const Index = () => {
 
   // Go to previous question
   const previousQuestion = () => {
+    // ... keep existing code (previous question logic)
     if (historyIndex <= 0) {
       toast.info("You're at the beginning of your history");
       return;
@@ -163,6 +201,7 @@ const Index = () => {
 
   // Handle keyboard navigation
   useEffect(() => {
+    // ... keep existing code (keyboard navigation logic)
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') {
         previousQuestion();
@@ -177,6 +216,7 @@ const Index = () => {
 
   // Animation classes based on direction
   const getAnimationClass = () => {
+    // ... keep existing code (animation class logic)
     if (direction === 'right') {
       return 'animate-slide-in-right';
     } else if (direction === 'left') {
@@ -191,6 +231,9 @@ const Index = () => {
   // Check if a deck is loaded
   const isDeckLoaded = questions.length > 0;
 
+  // Add extra bottom padding for standalone/installed mode
+  const contentPadding = isStandalone ? 'pb-16' : 'pb-4';
+
   return (
     <ThemeProvider>
       <div className="min-h-screen flex flex-col">
@@ -200,7 +243,7 @@ const Index = () => {
           isDeckLoaded={isDeckLoaded}
         />
         
-        <main className="flex-1 flex flex-col items-center justify-center p-6">
+        <main className={`flex-1 flex flex-col items-center justify-center p-6 ${contentPadding}`}>
           {showUploader ? (
             <div className="w-full max-w-xl">
               <h2 className="text-2xl font-bold text-center mb-6">
@@ -251,7 +294,7 @@ const Index = () => {
           )}
         </main>
         
-        <footer className="py-4 pb-12 text-center text-sm text-muted-foreground">
+        <footer className={`py-4 ${isStandalone ? 'pb-24' : 'pb-12'} text-center text-sm text-muted-foreground`}>
           Quanda Web created by Mirza Polat
         </footer>
       </div>
