@@ -36,7 +36,6 @@ const Index = () => {
     
     setShowUploader(false);
     resetDeck();
-    setQuestions([]);
   };
 
   // Reset the deck - mark all questions as unseen
