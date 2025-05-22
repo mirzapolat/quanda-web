@@ -33,10 +33,25 @@ const Index = () => {
   // Handle loading a deck
   const handleDeckLoaded = (loadedQuestions: Question[]) => {
     setShowUploader(false);
+    
+    // Clear history and reset state before setting new questions
+    setHistory([]);
+    setHistoryIndex(-1);
+    setCurrentQuestion(null);
+    setDirection(null);
+    
     setQuestions(loadedQuestions);
     
-    // First set the questions, then call resetDeck to initialize the deck
-    setTimeout(() => resetDeck(), 0);
+    // Get the first question immediately after loading
+    const question = getRandomQuestion(loadedQuestions);
+    if (question) {
+      const updatedQuestions = markAsSeen(loadedQuestions, question.id);
+      setQuestions(updatedQuestions);
+      setHistory([question]);
+      setHistoryIndex(0);
+      setCurrentQuestion(question);
+      toast.success(`Loaded ${loadedQuestions.length} questions`);
+    }
   };
 
   // Reset the deck - mark all questions as unseen
@@ -70,8 +85,11 @@ const Index = () => {
   // Import a new deck
   const importNewDeck = () => {
     setShowUploader(true);
-    resetDeck();
     setQuestions([]);
+    setHistory([]);
+    setHistoryIndex(-1);
+    setCurrentQuestion(null);
+    setDirection(null);
   };
 
   // Go to next question
