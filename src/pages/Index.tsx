@@ -33,10 +33,9 @@ const Index = () => {
   const handleDeckLoaded = (loadedQuestions: Question[]) => {
   
     // Then set the new questions
-    setQuestions(loadedQuestions);
     setShowUploader(false);
-
     resetDeck();
+    setQuestions(loadedQuestions);
   };
 
   // Reset the deck - mark all questions as unseen
