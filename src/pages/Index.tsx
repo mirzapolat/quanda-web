@@ -35,7 +35,19 @@ const Index = () => {
     setQuestions(loadedQuestions);
     
     setShowUploader(false);
-    resetDeck();
+
+    if (questions.length === 0) {
+      toast.error("No deck is currently loaded");
+      return;
+    }
+    
+    const resetQuestions = resetSeenStatus([...questions]);
+    setQuestions(resetQuestions);
+    
+    setHistory([]);
+    setHistoryIndex(-1);
+    setCurrentQuestion(null);
+    setDirection(null);
   };
 
   // Reset the deck - mark all questions as unseen
