@@ -101,6 +101,17 @@
   }
 }
 
+/* Add extra bottom padding for installed PWA version */
+@media (display-mode: standalone), (display-mode: fullscreen) {
+  body {
+    padding-bottom: 2rem; /* Add extra padding at the bottom in PWA mode */
+  }
+  
+  footer {
+    margin-bottom: 1.5rem; /* Give the footer some extra space at the bottom */
+  }
+}
+
 .question-card {
   perspective: 1000px;
   height: 100%;
@@ -112,4 +123,3 @@
   height: 100%;
   transition: transform 0.3s;
 }
-
