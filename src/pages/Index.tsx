@@ -223,7 +223,7 @@ const Index = () => {
         </main>
         
         <footer className="py-4 text-center text-sm text-muted-foreground">
-          Quanda Web — Random Question Cards
+          Quanda Web created by Mirza Polat
         </footer>
       </div>
     </ThemeProvider>
