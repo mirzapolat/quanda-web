@@ -3,10 +3,17 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "dark" | "light" | "system";
 
+// Define a type for our color object
+interface AccentColor {
+  r: number;
+  g: number;
+  b: number;
+}
+
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  accentColor: string;
+  accentColor: AccentColor; // Changed from string to AccentColor
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
