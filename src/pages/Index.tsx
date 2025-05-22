@@ -9,7 +9,8 @@ import {
   Question, 
   getRandomQuestion, 
   markAsSeen, 
-  resetSeenStatus 
+  resetSeenStatus,
+  allQuestionsSeen
 } from "@/utils/questionDeck";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
@@ -31,11 +32,20 @@ const Index = () => {
 
   // Handle loading a deck
   const handleDeckLoaded = (loadedQuestions: Question[]) => {
+    // Reset everything first before loading the new deck
+    resetDeckState();
+    
+    // Then set the new questions
     setQuestions(loadedQuestions);
+    setShowUploader(false);
+  };
+
+  // Reset the deck state
+  const resetDeckState = () => {
     setHistory([]);
     setHistoryIndex(-1);
     setCurrentQuestion(null);
-    setShowUploader(false);
+    setDirection(null);
   };
 
   // Reset the deck - mark all questions as unseen
@@ -47,9 +57,7 @@ const Index = () => {
     
     const resetQuestions = resetSeenStatus([...questions]);
     setQuestions(resetQuestions);
-    setHistory([]);
-    setHistoryIndex(-1);
-    setCurrentQuestion(null);
+    resetDeckState();
     
     // Get a new random question immediately
     const question = getRandomQuestion(resetQuestions);
@@ -67,22 +75,28 @@ const Index = () => {
   // Import a new deck
   const importNewDeck = () => {
     setShowUploader(true);
+    resetDeckState();
     setQuestions([]);
-    setHistory([]);
-    setHistoryIndex(-1);
-    setCurrentQuestion(null);
   };
 
   // Go to next question
   const nextQuestion = () => {
     if (questions.length === 0) return;
     
+    // Check if all questions have been seen, if so reset seen status
+    let questionsToUse = [...questions];
+    if (allQuestionsSeen(questionsToUse)) {
+      questionsToUse = resetSeenStatus(questionsToUse);
+      toast.info("All questions have been seen, starting from the beginning");
+      setQuestions(questionsToUse);
+    }
+    
     // Get a random question
-    const question = getRandomQuestion(questions);
+    const question = getRandomQuestion(questionsToUse);
     if (!question) return;
     
     // Mark as seen and update state
-    const updatedQuestions = markAsSeen(questions, question.id);
+    const updatedQuestions = markAsSeen(questionsToUse, question.id);
     setQuestions(updatedQuestions);
     
     // Add to history if moving forward
