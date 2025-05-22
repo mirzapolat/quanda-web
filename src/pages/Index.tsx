@@ -96,6 +96,25 @@ const Index = () => {
   const nextQuestion = () => {
     if (questions.length === 0) return;
     
+    // If we've gone back in history and now going forward again,
+    // we should use the existing history rather than getting a random question
+    if (historyIndex < history.length - 1) {
+      // We're moving forward in existing history
+      setDirection('right');
+      
+      // Set after animation starts
+      setTimeout(() => {
+        setHistoryIndex(historyIndex + 1);
+        setCurrentQuestion(history[historyIndex + 1]);
+        
+        // Reset direction after animation completes
+        setTimeout(() => setDirection(null), 300);
+      }, 10);
+      
+      return;
+    }
+    
+    // If we're at the end of history, get a new random question
     // Check if all questions have been seen, if so reset seen status
     let questionsToUse = [...questions];
     if (allQuestionsSeen(questionsToUse)) {
@@ -113,16 +132,8 @@ const Index = () => {
     setQuestions(updatedQuestions);
     
     // Add to history if moving forward
-    if (historyIndex === history.length - 1) {
-      setHistory([...history, question]);
-      setHistoryIndex(history.length);
-    } else {
-      // Replace future history with this new branch
-      const newHistory = history.slice(0, historyIndex + 1);
-      newHistory.push(question);
-      setHistory(newHistory);
-      setHistoryIndex(newHistory.length - 1);
-    }
+    setHistory([...history, question]);
+    setHistoryIndex(historyIndex + 1);
 
     setDirection('right');
     // Set after animation starts
