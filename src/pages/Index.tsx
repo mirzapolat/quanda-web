@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { QuestionCard } from "@/components/QuestionCard";
@@ -32,8 +33,10 @@ const Index = () => {
   // Handle loading a deck
   const handleDeckLoaded = (loadedQuestions: Question[]) => {
     setShowUploader(false);
-    resetDeck();
     setQuestions(loadedQuestions);
+    
+    // First set the questions, then call resetDeck to initialize the deck
+    setTimeout(() => resetDeck(), 0);
   };
 
   // Reset the deck - mark all questions as unseen
