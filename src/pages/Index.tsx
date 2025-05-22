@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { QuestionCard } from "@/components/QuestionCard";
@@ -192,7 +193,7 @@ const Index = () => {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col bg-white">
         <Header 
           onReset={resetDeck} 
           onImportNew={importNewDeck} 
@@ -213,7 +214,7 @@ const Index = () => {
                 <QuestionCard 
                   question={currentQuestion} 
                   animationClass={getAnimationClass()}
-                  onCardClick={nextQuestion}  // Add this prop to make the card clickable
+                  onCardClick={nextQuestion}
                 />
               </div>
               
@@ -250,7 +251,7 @@ const Index = () => {
           )}
         </main>
         
-        <footer className="py-4 text-center text-sm text-muted-foreground">
+        <footer className="py-4 pb-12 text-center text-sm text-muted-foreground">
           Quanda Web created by Mirza Polat
         </footer>
       </div>
