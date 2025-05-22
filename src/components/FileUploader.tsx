@@ -97,7 +97,6 @@ export function FileUploader({ onDeckLoaded }: FileUploaderProps) {
             <Button
               variant="outline"
               className="cursor-pointer"
-              as="span"
             >
               Browse Files
             </Button>
