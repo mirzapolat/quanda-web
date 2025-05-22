@@ -1,6 +1,5 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { generateRandomPastelColor } from "@/utils/colors";
 
 type Theme = "dark" | "light" | "system";
 
@@ -47,24 +46,6 @@ export function ThemeProvider({
       console.error("Failed to save theme to localStorage:", error);
     }
   }, [theme]);
-
-  // Apply random pastel color on initial render
-  useEffect(() => {
-    const randomPastelColor = generateRandomPastelColor();
-    const root = window.document.documentElement;
-    
-    // Update CSS variables for accent colors in both light and dark modes
-    root.style.setProperty('--accent', randomPastelColor);
-    
-    // Create a slightly darker version for the dark mode accent
-    const [hue, saturation, lightness] = randomPastelColor.split(' ');
-    const lightnessValue = parseInt(lightness);
-    const darkerLightness = Math.max(lightnessValue - 60, 20) + '%';
-    const darkerColor = `${hue} ${saturation} ${darkerLightness}`;
-    root.style.setProperty('--accent-dark', darkerColor);
-    
-    console.log("Applied random pastel color:", randomPastelColor);
-  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
