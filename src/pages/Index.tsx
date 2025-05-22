@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { QuestionCard } from "@/components/QuestionCard";
@@ -213,7 +212,8 @@ const Index = () => {
               <div className="question-card w-full max-w-xl relative">
                 <QuestionCard 
                   question={currentQuestion} 
-                  animationClass={getAnimationClass()} 
+                  animationClass={getAnimationClass()}
+                  onCardClick={nextQuestion}  // Add this prop to make the card clickable
                 />
               </div>
               
