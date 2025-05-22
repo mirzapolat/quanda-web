@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { parseCSV } from "@/utils/questionDeck";
 import { toast } from "sonner";
+import { Upload } from "lucide-react";
 
 interface FileUploaderProps {
   onDeckLoaded: (questions: any[]) => void;
@@ -69,6 +70,16 @@ export function FileUploader({ onDeckLoaded }: FileUploaderProps) {
     reader.readAsText(file);
   };
 
+  // Create reference for file input element
+  const fileInputRef = useState<HTMLInputElement | null>(null);
+
+  // Function to trigger file input click
+  const triggerFileInput = () => {
+    if (fileInputRef[0]) {
+      fileInputRef[0].click();
+    }
+  };
+
   return (
     <div 
       className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors
@@ -87,20 +98,21 @@ export function FileUploader({ onDeckLoaded }: FileUploaderProps) {
         
         <div>
           <input
+            ref={(input) => fileInputRef[0] = input}
             type="file"
             id="file-upload"
             className="sr-only"
             accept=".csv"
             onChange={handleFileChange}
           />
-          <label htmlFor="file-upload">
-            <Button
-              variant="outline"
-              className="cursor-pointer"
-            >
-              Browse Files
-            </Button>
-          </label>
+          <Button
+            variant="outline"
+            className="cursor-pointer"
+            onClick={triggerFileInput}
+          >
+            <Upload className="mr-2 h-4 w-4" />
+            Browse Files
+          </Button>
         </div>
         
         <p className="text-xs text-muted-foreground mt-4">
@@ -110,3 +122,4 @@ export function FileUploader({ onDeckLoaded }: FileUploaderProps) {
     </div>
   );
 }
+
