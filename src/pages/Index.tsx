@@ -174,7 +174,7 @@ const Index = () => {
               <h2 className="text-2xl font-bold text-center mb-6">
                 Import Question Deck
               </h2>
-              <FileUploader onDeckLoaded={handleDeckLoaded} />
+              <FileUploader onDeckLoaded={importNewDeck} />
             </div>
           ) : currentQuestion ? (
             <div className="flex flex-col items-center w-full space-y-8">
