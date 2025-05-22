@@ -31,11 +31,11 @@ const Index = () => {
 
   // Handle loading a deck
   const handleDeckLoaded = (loadedQuestions: Question[]) => {
-  
-    // Then set the new questions
-    setShowUploader(false);
     resetDeck();
     setQuestions(loadedQuestions);
+    
+    setShowUploader(false);
+    resetDeck();
   };
 
   // Reset the deck - mark all questions as unseen
