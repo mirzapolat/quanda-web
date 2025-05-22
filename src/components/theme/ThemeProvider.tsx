@@ -6,9 +6,19 @@ type Theme = "dark" | "light" | "system";
 interface ThemeContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  accentColor: string;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+// Function to generate a random pastel color
+const generateRandomPastelColor = () => {
+  // Use higher base values (130-220) to ensure pastel-like colors
+  const r = Math.floor(Math.random() * 90 + 130);
+  const g = Math.floor(Math.random() * 90 + 130);
+  const b = Math.floor(Math.random() * 90 + 130);
+  return { r, g, b };
+};
 
 export function ThemeProvider({
   children,
@@ -22,6 +32,11 @@ export function ThemeProvider({
     } catch {
       return "system";
     }
+  });
+
+  // Generate a random pastel color on initial load
+  const [accentColor] = useState(() => {
+    return generateRandomPastelColor();
   });
 
   useEffect(() => {
@@ -39,16 +54,34 @@ export function ThemeProvider({
       root.classList.remove("light", "dark");
       root.classList.add(theme);
     }
+
+    // Apply the accent color to CSS variables
+    const { r, g, b } = accentColor;
+    
+    // Set main accent color
+    root.style.setProperty('--accent-r', r.toString());
+    root.style.setProperty('--accent-g', g.toString());
+    root.style.setProperty('--accent-b', b.toString());
+    
+    // Create lighter version for light mode accent
+    root.style.setProperty('--accent-light-r', Math.min(r + 35, 255).toString());
+    root.style.setProperty('--accent-light-g', Math.min(g + 35, 255).toString());
+    root.style.setProperty('--accent-light-b', Math.min(b + 35, 255).toString());
+    
+    // Create darker version for dark mode accent
+    root.style.setProperty('--accent-dark-r', Math.max(r - 70, 0).toString());
+    root.style.setProperty('--accent-dark-g', Math.max(g - 70, 0).toString());
+    root.style.setProperty('--accent-dark-b', Math.max(b - 70, 0).toString());
     
     try {
       localStorage.setItem("theme", theme);
     } catch (error) {
       console.error("Failed to save theme to localStorage:", error);
     }
-  }, [theme]);
+  }, [theme, accentColor]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, accentColor }}>
       {children}
     </ThemeContext.Provider>
   );

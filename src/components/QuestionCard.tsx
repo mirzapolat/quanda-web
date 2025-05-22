@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 interface QuestionCardProps {
   question: Question;
   animationClass?: string;
-  onCardClick: () => void; // Add onClick handler prop
+  onCardClick: () => void;
 }
 
 export function QuestionCard({ question, animationClass, onCardClick }: QuestionCardProps) {
@@ -17,7 +17,7 @@ export function QuestionCard({ question, animationClass, onCardClick }: Question
         "border-2 border-accent cursor-pointer hover:border-primary transition-colors",
         animationClass
       )}
-      onClick={onCardClick} // Add the click handler
+      onClick={onCardClick}
     >
       <CardContent className="flex items-center justify-center p-6 h-full w-full">
         <p className="text-2xl font-medium text-center">{question.text}</p>
