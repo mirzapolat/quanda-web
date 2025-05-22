@@ -31,9 +31,9 @@ const Index = () => {
 
   // Handle loading a deck
   const handleDeckLoaded = (loadedQuestions: Question[]) => {
+    setShowUploader(false);
     resetDeck();
     setQuestions(loadedQuestions);
-    setShowUploader(false);
   };
 
   // Reset the deck - mark all questions as unseen
@@ -174,7 +174,7 @@ const Index = () => {
               <h2 className="text-2xl font-bold text-center mb-6">
                 Import Question Deck
               </h2>
-              <FileUploader onDeckLoaded={importNewDeck} />
+              <FileUploader onDeckLoaded={handleDeckLoaded} />
             </div>
           ) : currentQuestion ? (
             <div className="flex flex-col items-center w-full space-y-8">
