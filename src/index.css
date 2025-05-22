@@ -105,20 +105,3 @@
   height: 100%;
   transition: transform 0.3s;
 }
-
-/* Rainbow border animation */
-@keyframes rainbow-border {
-  0% { border-color: #ff0000; box-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
-  14% { border-color: #ff8000; box-shadow: 0 0 15px rgba(255, 128, 0, 0.7); }
-  28% { border-color: #ffff00; box-shadow: 0 0 15px rgba(255, 255, 0, 0.7); }
-  42% { border-color: #00ff00; box-shadow: 0 0 15px rgba(0, 255, 0, 0.7); }
-  57% { border-color: #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.7); }
-  71% { border-color: #0000ff; box-shadow: 0 0 15px rgba(0, 0, 255, 0.7); }
-  85% { border-color: #8000ff; box-shadow: 0 0 15px rgba(128, 0, 255, 0.7); }
-  100% { border-color: #ff0000; box-shadow: 0 0 15px rgba(255, 0, 0, 0.7); }
-}
-
-.rainbow-border {
-  animation: rainbow-border 10s linear infinite;
-  border-width: 3px !important;
-}

@@ -14,7 +14,7 @@ export function QuestionCard({ question, animationClass, onCardClick }: Question
     <Card 
       className={cn(
         "w-full max-w-xl h-96 flex items-center justify-center shadow-lg", 
-        "border-2 rainbow-border cursor-pointer hover:shadow-lg transition-shadow",
+        "border-2 border-accent cursor-pointer hover:border-primary transition-colors",
         animationClass
       )}
       onClick={onCardClick} // Add the click handler
