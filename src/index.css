@@ -94,6 +94,13 @@
   }
 }
 
+/* Mobile light mode specific styles */
+@media (max-width: 767px) {
+  :root:not(.dark) {
+    --background: 0 0% 100%; /* Pure white background for mobile in light mode */
+  }
+}
+
 .question-card {
   perspective: 1000px;
   height: 100%;
@@ -105,3 +112,4 @@
   height: 100%;
   transition: transform 0.3s;
 }
+
