@@ -33,19 +33,11 @@ const Index = () => {
   // Handle loading a deck
   const handleDeckLoaded = (loadedQuestions: Question[]) => {
     // Reset everything first before loading the new deck
-    resetDeckState();
+    resetDeck();
     
     // Then set the new questions
     setQuestions(loadedQuestions);
     setShowUploader(false);
-  };
-
-  // Reset the deck state
-  const resetDeckState = () => {
-    setHistory([]);
-    setHistoryIndex(-1);
-    setCurrentQuestion(null);
-    setDirection(null);
   };
 
   // Reset the deck - mark all questions as unseen
@@ -57,7 +49,11 @@ const Index = () => {
     
     const resetQuestions = resetSeenStatus([...questions]);
     setQuestions(resetQuestions);
-    resetDeckState();
+    
+    setHistory([]);
+    setHistoryIndex(-1);
+    setCurrentQuestion(null);
+    setDirection(null);
     
     // Get a new random question immediately
     const question = getRandomQuestion(resetQuestions);
@@ -75,7 +71,7 @@ const Index = () => {
   // Import a new deck
   const importNewDeck = () => {
     setShowUploader(true);
-    resetDeckState();
+    resetDeck();
     setQuestions([]);
   };
 
