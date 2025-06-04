@@ -1,22 +1,24 @@
 
 {
-  "name": "Quanda Web",
+  "name": "Quanda",
   "short_name": "Quanda",
   "description": "Random question cards from your CSV files",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#fff7ed",
+  "theme_color": "#fff7ed",
   "icons": [
     {
-      "src": "/lovable-uploads/4fcf0c42-ef75-4d3f-a8ea-9f78c3a6f06d.png",
+      "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
-      "src": "/lovable-uploads/4fcf0c42-ef75-4d3f-a8ea-9f78c3a6f06d.png",
+      "src": "/web-app-manifest-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
