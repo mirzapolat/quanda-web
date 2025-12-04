@@ -13,12 +13,12 @@ export function Header({ onReset, onImportNew, isDeckLoaded }: HeaderProps) {
   return (
     <header className="w-full py-4 px-6 flex justify-between items-center">
       <div className="flex items-center">
-        <h1 className="text-xl md:text-2xl font-bold tracking-tight">Quanda Web</h1>
+        <h1 className="text-xl md:text-2xl font-bold tracking-tight">Quanda</h1>
       </div>
       <div className="flex items-center space-x-2 md:space-x-4">
         {isDeckLoaded && (
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             onClick={onReset}
             size="icon"
             className="md:h-10 md:w-auto md:px-4 md:py-2"
@@ -27,7 +27,7 @@ export function Header({ onReset, onImportNew, isDeckLoaded }: HeaderProps) {
             <span className="hidden md:inline">Reset Deck</span>
           </Button>
         )}
-        <Button 
+        <Button
           variant="outline"
           onClick={onImportNew}
           size="icon"
