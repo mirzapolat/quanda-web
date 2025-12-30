@@ -1,0 +1,1 @@
+docker build -t quanda:latest -f Dockerfile .
